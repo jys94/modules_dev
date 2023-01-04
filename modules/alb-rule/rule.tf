@@ -4,7 +4,7 @@ variable "TARGET_GROUP_ARN" {}
 variable "CONDITION_FIELD" {}
 
 variable "CONDITION_VALUES" {
-  type = "list"
+  type = list
 }
 
 resource "aws_lb_listener_rule" "alb_rule" {
