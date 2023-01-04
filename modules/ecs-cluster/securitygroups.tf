@@ -3,9 +3,8 @@ resource "aws_security_group" "cluster" {
   vpc_id      = "${var.VPC_ID}"
   description = "${var.CLUSTER_NAME}"
 }
-
 resource "aws_security_group_rule" "cluster-allow-ssh" {
-  count                    = "${ var.ENABLE_SSH ? 1 : 0}"
+  count                    = "${var.ENABLE_SSH ? 1 : 0}"
   security_group_id        = "${aws_security_group.cluster.id}"
   type                     = "ingress"
   from_port                = 22
@@ -13,7 +12,6 @@ resource "aws_security_group_rule" "cluster-allow-ssh" {
   protocol                 = "tcp"
   source_security_group_id = "${var.SSH_SG}"
 }
-
 resource "aws_security_group_rule" "cluster-egress" {
   security_group_id = "${aws_security_group.cluster.id}"
   type              = "egress"

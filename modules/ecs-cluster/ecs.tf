@@ -1,31 +1,24 @@
 #
 # ECS ami
 #
-
 data "aws_ami" "ecs" {
   most_recent = true
-
   filter {
     name   = "name"
     values = ["amzn2-ami-ecs-hvm-*-x86_64-ebs"]
   }
-
   filter {
     name   = "virtualization-type"
     values = ["hvm"]
   }
-
   owners = ["591542846629"] # AWS
 }
-
 #
 # ECS cluster
 #
-
 resource "aws_ecs_cluster" "cluster" {
   name = "${var.CLUSTER_NAME}"
 }
-
 data "template_file" "ecs_init" {
     template = "${file("${path.module}/templates/ecs_init.tpl")}"
     vars {
@@ -48,7 +41,6 @@ resource "aws_launch_configuration" "cluster" {
     create_before_destroy = true
   }
 }
-
 #
 # autoscaling
 #
@@ -60,7 +52,6 @@ resource "aws_autoscaling_group" "cluster" {
   min_size             = "${var.ECS_MINSIZE}"
   max_size             = "${var.ECS_MAXSIZE}"
   desired_capacity     = "${var.ECS_DESIRED_CAPACITY}"
-
   tag {
     key                 = "Name"
     value               = "${var.CLUSTER_NAME}-ecs"

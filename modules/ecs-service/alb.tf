@@ -7,7 +7,6 @@ resource "aws_alb_target_group" "ecs-service" {
   protocol             = "HTTP"
   vpc_id               = "${var.VPC_ID}"
   deregistration_delay = "${var.DEREGISTRATION_DELAY}"
-
   health_check {
     healthy_threshold   = 3
     unhealthy_threshold = 3

@@ -1,7 +1,6 @@
 #
 # ECR 
 #
-
 resource "aws_ecr_repository" "ecs-service" {
   name = "${var.APPLICATION_NAME}"
 }
@@ -17,7 +16,6 @@ data "aws_ecs_task_definition" "ecs-service" {
 #
 # task definition template
 #
-
 data "template_file" "ecs-service" {
   template = "${file("${path.module}/ecs-service.json")}"
 
@@ -36,7 +34,6 @@ data "template_file" "ecs-service" {
 #
 # task definition
 #
-
 resource "aws_ecs_task_definition" "ecs-service-taskdef" {
   family                = "${var.APPLICATION_NAME}"
   container_definitions = "${data.template_file.ecs-service.rendered}"
@@ -46,11 +43,12 @@ resource "aws_ecs_task_definition" "ecs-service-taskdef" {
 #
 # ecs service
 #
-
 resource "aws_ecs_service" "ecs-service" {
-  name                               = "${var.APPLICATION_NAME}"
-  cluster                            = "${var.CLUSTER_ARN}"
-  task_definition                    = "${aws_ecs_task_definition.ecs-service-taskdef.family}:${max("${aws_ecs_task_definition.ecs-service-taskdef.revision}", "${data.aws_ecs_task_definition.ecs-service.revision}")}"
+  name            = "${var.APPLICATION_NAME}"
+  cluster         = "${var.CLUSTER_ARN}"
+
+  task_definition = "${aws_ecs_task_definition.ecs-service-taskdef.family}:${max("${aws_ecs_task_definition.ecs-service-taskdef.revision}", "${data.aws_ecs_task_definition.ecs-service.revision}")}"
+
   iam_role                           = "${var.SERVICE_ROLE_ARN}"
   desired_count                      = "${var.DESIRED_COUNT}"
   deployment_minimum_healthy_percent = "${var.DEPLOYMENT_MINIMUM_HEALTHY_PERCENT}"
@@ -61,7 +59,6 @@ resource "aws_ecs_service" "ecs-service" {
     container_name   = "${var.APPLICATION_NAME}"
     container_port   = "${var.APPLICATION_PORT}"
   }
-
   depends_on = ["null_resource.alb_exists"]
 }
 
