@@ -20,14 +20,12 @@ data "template_file" "ecs-service" {
   template = "${file("${path.module}/ecs-service.json")}"
 
   vars = {
-    APPLICATION_NAME    = var.APPLICATION_NAME
-    APPLICATION_PORT    = var.APPLICATION_PORT
-    APPLICATION_VERSION = var.APPLICATION_VERSION
-    ECR_URL             = aws_ecr_repository.ecs-service.repository_url
-    AWS_REGION          = var.AWS_REGION
-    CPU_RESERVATION     = var.CPU_RESERVATION
-    MEMORY_RESERVATION  = var.MEMORY_RESERVATION
-    LOG_GROUP           = var.LOG_GROUP
+    APPLICATION_NAME    = "${var.APPLICATION_NAME}"
+    APPLICATION_PORT    = "${var.APPLICATION_PORT}"
+    APPLICATION_VERSION = "${var.APPLICATION_VERSION}"
+    ECR_URL             = "${aws_ecr_repository.ecs-service.repository_url}"
+    AWS_REGION          = "${var.AWS_REGION}"
+    LOG_GROUP           = "${var.LOG_GROUP}"
   }
 }
 
