@@ -2,8 +2,8 @@
   {
     "name": "${APPLICATION_NAME}",
     "image": "${ECR_URL}:${APPLICATION_VERSION}",
-    "cpu": "${CPU_RESERVATION}",
-    "memoryReservation": "${MEMORY_RESERVATION}",
+    "cpu": 256,
+    "memoryReservation": 128,
     "essential": true,
     "mountPoints": [],
     "portMappings" : [
