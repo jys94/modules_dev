@@ -1,7 +1,7 @@
 variable "VPC_ID" {}
 variable "AWS_REGION" {}
 variable "APPLICATION_NAME" {}
-variable "APPLICATION_PORT" {}
+variable "APPLICATION_PORT" {} # Not Using
 variable "APPLICATION_VERSION" {}
 variable "CLUSTER_ARN" {}
 variable "SERVICE_ROLE_ARN" {}
