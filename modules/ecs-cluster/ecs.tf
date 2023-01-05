@@ -33,7 +33,7 @@ resource "aws_launch_configuration" "cluster" {
   security_groups      = ["${aws_security_group.cluster.id}"]
 
   user_data = templatefile("${path.module}/templates/ecs_init.tpl", {
-    cluster_name = var.cluster_name
+    cluster_name = var.CLUSTER_NAME
   })
 
   lifecycle {
