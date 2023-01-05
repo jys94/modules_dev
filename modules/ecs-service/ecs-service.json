@@ -8,7 +8,7 @@
     "mountPoints": [],
     "portMappings" : [
       {
-        "containerPort": "${APPLICATION_PORT}",
+        "containerPort": 80,
         "hostPort": 0
       }
     ],
