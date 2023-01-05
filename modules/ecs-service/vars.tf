@@ -10,8 +10,8 @@ variable "DEPLOYMENT_MINIMUM_HEALTHY_PERCENT" { default = 100 }
 variable "DEPLOYMENT_MAXIMUM_PERCENT" { default = 200 }
 variable "DEREGISTRATION_DELAY" { default = 30 }
 variable "HEALTHCHECK_MATCHER" { default = "200" }
-variable "CPU_RESERVATION" {}
-variable "MEMORY_RESERVATION" {}
+variable "CPU_RESERVATION" { type = number }
+variable "MEMORY_RESERVATION" { type = number }
 variable "LOG_GROUP" {}
 variable "TASK_ROLE_ARN" { default = "" }
 variable "ALB_ARN" {}
