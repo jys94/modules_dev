@@ -13,17 +13,12 @@ data "aws_ami" "ecs" {
   }
   owners = ["591542846629"] # AWS
 }
+
 #
 # ECS cluster
 #
 resource "aws_ecs_cluster" "cluster" {
   name = "${var.CLUSTER_NAME}"
-}
-data "template_file" "ecs_init" {
-    template = "${file("${path.module}/templates/ecs_init.tpl")}"
-    vars {
-        CLUSTER_NAME   = "${var.CLUSTER_NAME}"
-    }
 }
 
 #
@@ -36,11 +31,16 @@ resource "aws_launch_configuration" "cluster" {
   key_name             = "${var.SSH_KEY_NAME}"
   iam_instance_profile = "${aws_iam_instance_profile.cluster-ec2-role.id}"
   security_groups      = ["${aws_security_group.cluster.id}"]
-  user_data            = "${data.template_file.ecs_init.rendered}"
+
+  user_data = templatefile("${path.module}/templates/ecs_init.tpl", {
+    cluster_name = var.cluster_name
+  })
+
   lifecycle {
     create_before_destroy = true
   }
 }
+
 #
 # autoscaling
 #
